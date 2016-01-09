@@ -1,17 +1,20 @@
 import path from 'path';
 import webpack from 'webpack';
 
+var host = 'localhost';
+var port = 3001;
+
 const config = {
 	devtool: "source-map",
 	entry: [
-		"webpack-dev-server/client?http://localhost:3001",
+		`webpack-dev-server/client?http://${host}:${port}`,
 		"webpack/hot/only-dev-server",
 		"./src/client.js"		
 	],
 	output: {
 		filename: "bundle.js",
 		path: path.resolve(__dirname, "../static/dist"),
-		publicPath: "http://localhost:3001/dist"
+		publicPath: `http://${host}:${port}/dist`
 	},
 	resolve: {
         extensions: ['', '.js', '.jsx']

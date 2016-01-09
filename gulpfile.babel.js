@@ -5,10 +5,15 @@ import runSequence from 'run-sequence';
 import nodemon from 'nodemon';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
+import del from 'del';
 
 import npmPackage from './package.json'
 import webpackDevConfig from './webpack/dev.config.js';
 import webpackProdConfig from './webpack/prod.config.js';
+
+gulp.task('clean', () => {
+    del(['./static/dist']);
+})
 
 gulp.task('build:client', (done) => {
     webpack(webpackDevConfig, (err, stats) => {
@@ -23,8 +28,11 @@ gulp.task('build:client', (done) => {
 gulp.task('webpack-dev-server', (done) => {
     var compiler = webpack(webpackDevConfig);
 
+    var host = 'localhost';
+    var port = 3001;
+    console.log(`http://${host}:${port}`)
     new WebpackDevServer(compiler, {
-        contentBase: 'http://localhost:3001',
+        contentBase: `http://${host}:${port}`,
         hot: true,
         inline: true,
         lazy: false,
@@ -34,7 +42,7 @@ gulp.task('webpack-dev-server', (done) => {
         }
     }).listen(3001, 'localhost', err => {
         if(err) throw new gutil.PluginError("webpack-dev-server", err);
-        gutil.log("[webpack-dev-server]", "http://localhost:3001/webpack-dev-server/index.html");
+        gutil.log("[webpack-dev-server]", `http://${host}:${port}/webpack-dev-server/index.html`);
         done();
     })
 })
@@ -58,5 +66,5 @@ gulp.task('nodemon', () => {
 })
 
 gulp.task('serve:dev', (done) => {
-    runSequence('build:client', ['nodemon', 'webpack-dev-server'], done);
+    runSequence('clean', 'build:client', ['nodemon', 'webpack-dev-server'], done);
 })
