@@ -11,8 +11,9 @@ import npmPackage from './package.json'
 import webpackDevConfig from './webpack/dev.config.js';
 import webpackProdConfig from './webpack/prod.config.js';
 
-gulp.task('clean', () => {
+gulp.task('clean', (done) => {
     del(['./static/dist']);
+    done();
 })
 
 gulp.task('build:client', (done) => {
@@ -32,7 +33,7 @@ gulp.task('webpack-dev-server', (done) => {
     var port = 3001;
     console.log(`http://${host}:${port}`)
     new WebpackDevServer(compiler, {
-        contentBase: `http://${host}:${port}`,
+        contentBase: 'http://localhost:3001',
         hot: true,
         inline: true,
         lazy: false,
@@ -43,7 +44,7 @@ gulp.task('webpack-dev-server', (done) => {
     }).listen(3001, 'localhost', err => {
         if(err) throw new gutil.PluginError("webpack-dev-server", err);
         gutil.log("[webpack-dev-server]", `http://${host}:${port}/webpack-dev-server/index.html`);
-        done();
+        // done();
     })
 })
 
@@ -66,5 +67,5 @@ gulp.task('nodemon', () => {
 })
 
 gulp.task('serve:dev', (done) => {
-    runSequence('clean', 'build:client', ['nodemon', 'webpack-dev-server'], done);
+    runSequence('clean', ['nodemon', 'webpack-dev-server'], done);
 })

@@ -14,10 +14,10 @@ const config = {
 	output: {
 		filename: "bundle.js",
 		path: path.resolve(__dirname, "../static/dist"),
-		publicPath: `http://${host}:${port}/dist`
+		publicPath: `http://${host}:${port}/dist/`
 	},
 	resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ['', '.js', '.jsx', '.scss']
     },
 	module: {
         loaders: [
@@ -28,11 +28,25 @@ const config = {
                 	'babel'                	
                 ],
                 exclude: /node_modules/
+            },
+            {
+            	test: /\.scss$/,
+            	loaders: [
+            		"style",
+            		"css?sourceMap",
+            		"sass?sourceMap"
+            	]
             }
         ]
 	},
 	plugins: [	
-	    new webpack.HotModuleReplacementPlugin()
+	    new webpack.HotModuleReplacementPlugin(),
+        new webpack.DefinePlugin({
+            "process.env": {
+                // NODE_ENV: JSON.stringify("development"),
+                BROWSER: JSON.stringify(true)
+            }
+        })
 	]
 }
 
