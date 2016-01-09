@@ -36,13 +36,5 @@ export default function (cb) {
         })
     });
 
-    // server.get('/', (req, res) => {
-    //     res.send("hello world");
-    // });
-    
-    // server.post('/post', (req, res) => {
-
-    // });
-
     return server.listen(server.get("port"), () => cb(server));
 }
