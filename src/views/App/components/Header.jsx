@@ -1,9 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-
-if (process.env.BROWSER) {
-	require('./Header.scss');	
-}
+import './Header.scss';
 
 export default class header extends React.Component {
 	render() {

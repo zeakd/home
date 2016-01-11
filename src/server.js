@@ -6,7 +6,7 @@ import url from 'url';
 import React from 'react';
 import { renderToString } from 'react-dom/server'
 import { match, RouterContext } from 'react-router';
-import routes from './routes'
+import routes from './routes';
 
 export default function (cb) {
     const server = express();
@@ -38,6 +38,6 @@ export default function (cb) {
             }
         })
     });
-    
+
     return server.listen(server.get("port"), () => cb(server));
 }

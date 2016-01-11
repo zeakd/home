@@ -1,5 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
+import autoprefixer from 'autoprefixer';
 
 var host = 'localhost';
 var port = 3001;
@@ -14,7 +15,7 @@ const config = {
 	output: {
 		filename: "bundle.js",
 		path: path.resolve(__dirname, "../static/dist"),
-		publicPath: `http://${host}:${port}/dist/`
+		publicPath: `http://${host}:3000/dist/`
 	},
 	resolve: {
         extensions: ['', '.js', '.jsx', '.scss']
@@ -34,19 +35,24 @@ const config = {
             	loaders: [
             		"style",
             		"css?sourceMap",
+                    "postcss",
             		"sass?sourceMap"
             	]
             }
         ]
 	},
+    sassLoader: {
+
+    },
+    postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ],
 	plugins: [	
-	    new webpack.HotModuleReplacementPlugin(),
-        new webpack.DefinePlugin({
-            "process.env": {
-                // NODE_ENV: JSON.stringify("development"),
-                BROWSER: JSON.stringify(true)
-            }
-        })
+	    new webpack.HotModuleReplacementPlugin()
+        // new webpack.DefinePlugin({
+        //     "process.env": {
+        //         // NODE_ENV: JSON.stringify("development"),
+        //         BROWSER: JSON.stringify(true)
+        //     }
+        // })
 	]
 }
 
