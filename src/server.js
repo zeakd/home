@@ -18,7 +18,9 @@ export default function (cb) {
     server.set("port", process.env.PORT || 3000);
     // integrating webpack-dev-server and express dist file.
     // http://stackoverflow.com/questions/26203725/how-to-allow-for-webpack-dev-server-to-allow-entry-points-from-react-router
-    server.use('/dist', proxy(url.parse('http://localhost:3001/dist')));
+    if (server.get('env') === 'development') {
+        server.use('/dist', proxy(url.parse('http://localhost:3001/dist')));
+    }
     server.use(express.static(path.resolve(__dirname, '../static')));
 
     server.use((req, res) => {

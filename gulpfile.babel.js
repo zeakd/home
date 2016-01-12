@@ -16,24 +16,26 @@ gulp.task('clean', (done) => {
     done();
 })
 
+gulp.task('build', (done) => {
+    runSequence('build:client', done);
+});
+
 gulp.task('build:client', (done) => {
-    webpack(webpackDevConfig, (err, stats) => {
+    webpack(webpackProdConfig, (err, stats) => {
         if(err) throw new gutil.PluginError("webpack", err);
         gutil.log("[webpack]", stats.toString());
         done();
     });
-})
-
-
+});
 
 gulp.task('webpack-dev-server', (done) => {
     var compiler = webpack(webpackDevConfig);
 
     var host = 'localhost';
     var port = 3001;
-    console.log(`http://${host}:${port}`)
+
     new WebpackDevServer(compiler, {
-        contentBase: 'http://localhost:3001',
+        contentBase: `http://${host}:${port}`,
         hot: true,
         inline: true,
         lazy: false,
@@ -66,6 +68,9 @@ gulp.task('nodemon', () => {
     });
 })
 
-gulp.task('serve:dev', (done) => {
+gulp.task('serve', ['serve:dev'])
+
+gulp.task('serve:dev', done => {
     runSequence('clean', ['nodemon', 'webpack-dev-server'], done);
 })
+
