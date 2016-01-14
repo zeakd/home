@@ -60,9 +60,10 @@ gulp.task('nodemon', () => {
         watch: [
             'src/server.js',
             'src/routes.js',
+            'src/views/',
             'src/models'
         ],
-        ext: 'js'
+        ext: 'js,jsx'
     }).on('restart', function() {
         console.log('Restarted!');
     });

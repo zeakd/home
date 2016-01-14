@@ -15,7 +15,7 @@ const config = {
 	output: {
 		filename: "bundle.js",
 		path: path.resolve(__dirname, "../static/dist"),
-		publicPath: `http://${host}:3000/dist/`
+		publicPath: `http://${host}:${port}/dist/`
 	},
 	resolve: {
         extensions: ['', '.js', '.jsx', '.scss']
@@ -48,13 +48,13 @@ const config = {
         autoprefixer({ browsers: ['last 2 versions'] }) 
     ],
 	plugins: [	
-	    new webpack.HotModuleReplacementPlugin()
-        // new webpack.DefinePlugin({
-        //     "process.env": {
-        //         // NODE_ENV: JSON.stringify("development"),
-        //         BROWSER: JSON.stringify(true)
-        //     }
-        // })
+	    new webpack.HotModuleReplacementPlugin(),
+        new webpack.DefinePlugin({
+            "process.env": {
+                // NODE_ENV: JSON.stringify("development"),
+                BROWSER: JSON.stringify(true)
+            }
+        })
 	]
 }
 
