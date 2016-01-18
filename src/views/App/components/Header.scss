@@ -1,10 +1,31 @@
 #header {
-    .title, nav{
+    height : 200px;
+    background-color: #301DFF;
+    color : white;
+    text-align: center;
+    .title-block {
+        margin: 50px auto 0 auto;
+        padding : 0 10px;
         display: inline-block;
+        font-size: 16px;
+        .title {
+            font-size: 2.0em;
+            display: block;
+            text-align: left;
+        }
+        .subtitle {
+            font-size: 1.0em;
+            text-align: left;
+            display: block;
+        }
+    }
+    nav {
+        a {
+            margin : 5px;
+        }
     }
 	a {
-		// display: inline-block;
-        // display: flex;
-        margin: 5px;
+        color: white;
+        text-decoration: none;
 	}
 }

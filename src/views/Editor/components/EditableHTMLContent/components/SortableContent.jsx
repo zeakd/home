@@ -32,9 +32,9 @@ export default class SortableContent extends SortableComponent {
             <div>
                 {this.state.items.map(item => {
                     switch(item.type) {
-                        case 'h1': return <h1 data-type={item.type}>{item.value}</h1>;
-                        case 'h2': return <h2 data-type={item.type}>{item.value}</h2>;
-                        case 'p' : return <p data-type={item.type}>{item.value}</p>;
+                        case 'h1': return <h1 contentEditable data-type={item.type}>{item.value}</h1>;
+                        case 'h2': return <h2 contentEditable data-type={item.type}>{item.value}</h2>;
+                        case 'p' : return <p contentEditable data-type={item.type}>{item.value}</p>;
                         default: return null;
                     }
                 })}

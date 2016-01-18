@@ -18,7 +18,7 @@ const config = {
 		publicPath: `http://${host}:${port}/dist/`
 	},
 	resolve: {
-        extensions: ['', '.js', '.jsx', '.scss']
+        extensions: ['', '.js', '.jsx', '.scss', '.css']
     },
 	module: {
         loaders: [
@@ -31,7 +31,7 @@ const config = {
                 exclude: /node_modules/
             },
             {
-            	test: /\.scss$/,
+            	test: /\.s?css$/,
             	loaders: [
             		"style",
             		"css?sourceMap",

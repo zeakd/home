@@ -20,8 +20,7 @@ class SortableComponent extends React.Component {
     }
 
     _handleAdd(e) {
-        var isClone = _activeComponent.sortableOptions.group && 
-                    _activeComponent.sortableOptions.group.pull &&
+        var isClone = _activeComponent.sortableOptions.group &&
                     _activeComponent.sortableOptions.group.pull === 'clone';
         if (!isClone) {
             e.from.insertBefore(e.item, _nextSibling);            
@@ -49,8 +48,7 @@ class SortableComponent extends React.Component {
     }
 
     _handleUpdate(e) {
-        var isClone = this.sortableOptions.group && 
-                    this.sortableOptions.group.pull &&
+        var isClone = this.sortableOptions.group &&
                     this.sortableOptions.group.pull === 'clone';
         if (!isClone) {
             e.from.insertBefore(e.item, _nextSibling);            
@@ -61,8 +59,7 @@ class SortableComponent extends React.Component {
             var items = this.state.items;
             var oldIndex = e.oldIndex;
             var newIndex = e.newIndex;
-            var isClone = this.sortableOptions.group && 
-                        this.sortableOptions.group.pull &&
+            var isClone = this.sortableOptions.group &&
                         this.sortableOptions.group.pull === 'clone';
             items.splice(newIndex, 0, items.splice(oldIndex, 1)[0]);
             

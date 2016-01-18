@@ -1,6 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import autoprefixer from 'autoprefixer';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const config = {
     devtool: "source-map",
@@ -24,14 +25,10 @@ const config = {
                 exclude: /node_modules/
             },
             {
-                test: /\.scss$/,
-                loaders: [
-                    "style",
-                    "css?sourceMap",
-                    "postcss",
-                    "sass?sourceMap"
-                ]
-            }
+                test: /\.s?css$/,
+                loader: ExtractTextPlugin.extract("style", "css?sourceMap!postcss!sass?sourceMap")
+            },
+
         ]
     },
     sassLoader: {
@@ -41,7 +38,8 @@ const config = {
         autoprefixer({ browsers: ['last 2 versions'] }) 
     ],
     plugins: [  
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new ExtractTextPlugin("styles.css")
         // new webpack.DefinePlugin({
         //     "process.env": {
         //         // NODE_ENV: JSON.stringify("development"),
