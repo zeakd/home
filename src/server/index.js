@@ -56,12 +56,14 @@ app.use((req, res) => {
             // your "not found" component or route respectively, and send a 404 as
             // below, if you're using a catch-all route.       
             const store = createStore(reducers);
-
+            const initialState = { 
+                renderSource : 'server'
+            };
             var rendered = renderToString(
                 <Provider store={store}>
                     <RouterContext {...renderProps} />
                 </Provider>)
-            res.status(200).send(renderFullPage(rendered, {}));
+            res.status(200).send(renderFullPage(rendered, initialState));
         } else {
             res.status(404).send('Not found')
         }

@@ -59,7 +59,7 @@ gulp.task('nodemon', () => {
         // ignore: ['*'],
         watch: [
             'src/server',
-            'src/routes',
+            'src/routes.jsx',
             'src/containers/',
             'src/components/'
         ],

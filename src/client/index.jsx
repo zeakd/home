@@ -3,20 +3,27 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { compose, createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { Router, Route, Link, browserHistory } from 'react-router';
-import { syncHistory, routeReducer } from 'redux-simple-router';
-import _reducers from '../reducers';
-import routes from '../routes'
+import { Router, Route, browserHistory } from 'react-router';
+import { syncHistory } from 'redux-simple-router';
+import reducers from '../reducers';
+import routes from '../routes';
 
-const reducers = combineReducers(Object.assign({}, _reducers, {
-    routing: routeReducer
-}))
+import { createDevTools } from 'redux-devtools';
+import LogMonitor from 'redux-devtools-log-monitor';
+import DockMonitor from 'redux-devtools-dock-monitor';
 
-const reduxRouterMiddleware = syncHistory(browserHistory);
-const createStoreWithMiddleware = applyMiddleware(reduxRouterMiddleware)(createStore);
+const initialState = window.__INITIAL_STATE__;
+const middleware = syncHistory(browserHistory);
 
-const store = createStoreWithMiddleware(reducers);
-reduxRouterMiddleware.listenForReplays(store);
+// const finalCreateStore = compose(
+//     DevTools.instrument(),
+//     applyMiddleware(middleware)
+// )(createStore);
+
+
+const finalCreateStore = applyMiddleware(middleware)(createStore);
+const store = finalCreateStore(reducers, initialState);
+middleware.listenForReplays(store);
 
 ReactDOM.render((
     <Provider store={store}>
