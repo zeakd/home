@@ -57,7 +57,10 @@
     "normalize.css": "^3.0.3",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
+    "react-redux": "^4.0.6",
     "react-router": "^2.0.0-rc4",
+    "redux": "^3.0.5",
+    "redux-simple-router": "^2.0.3",
     "sortablejs": "^1.4.2",
     "whatwg-fetch": "^0.10.1"
   }

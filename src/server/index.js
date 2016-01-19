@@ -6,6 +6,9 @@ import url from 'url';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import reducers from '../reducers';
 import routes from '../routes';
 
 global.__CLIENT__ = false;
@@ -52,7 +55,12 @@ app.use((req, res) => {
             // You can also check renderProps.components or renderProps.routes for
             // your "not found" component or route respectively, and send a 404 as
             // below, if you're using a catch-all route.       
-            var rendered = renderToString(<RouterContext {...renderProps} />)
+            const store = createStore(reducers);
+
+            var rendered = renderToString(
+                <Provider store={store}>
+                    <RouterContext {...renderProps} />
+                </Provider>)
             res.status(200).send(renderFullPage(rendered, {}));
         } else {
             res.status(404).send('Not found')
