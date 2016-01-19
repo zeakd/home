@@ -58,10 +58,10 @@ gulp.task('nodemon', () => {
         script: path.join(__dirname, npmPackage.main),
         // ignore: ['*'],
         watch: [
-            'src/server.js',
-            'src/routes.js',
-            'src/views/',
-            'src/models'
+            'src/server',
+            'src/routes',
+            'src/containers/',
+            'src/components/'
         ],
         ext: 'js,jsx'
     }).on('restart', function() {
