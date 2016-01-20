@@ -3,6 +3,8 @@ import express from 'express';
 import path from 'path';
 import proxy from 'proxy-middleware';
 import url from 'url';
+import bodyParser from 'body-parser';
+
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
@@ -10,22 +12,23 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducers from '../reducers';
 import routes from '../routes';
-
-global.__CLIENT__ = false;
-global.__SERVER__ = true;
-global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
+import DevTools from '../containers/Devtools';
+import { apiRouter } from './routers';
 
 var app = express();
 
+app.set("port", process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'ejs');
 // app.set("host", process.env.HOST || "0.0.0.0");
-app.set("port", process.env.PORT || 3000);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.resolve(__dirname, '../static')));
+
 if (__DEVELOPMENT__) {
     app.use('/dist', proxy(url.parse('http://localhost:3001/dist')));
 }
-
-app.use(express.static(path.resolve(__dirname, '../static')));
+app.use('/api', apiRouter);
 
 function renderFullPage(renderedContent, initialState) {
   return `
@@ -45,7 +48,7 @@ function renderFullPage(renderedContent, initialState) {
    `
 }
 
-app.use((req, res) => {
+app.use((req, res, next) => {
     match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
         if (error) {
             res.status(500).send(error.message)
@@ -65,7 +68,7 @@ app.use((req, res) => {
                 </Provider>)
             res.status(200).send(renderFullPage(rendered, initialState));
         } else {
-            res.status(404).send('Not found')
+            res.status(404).end();
         }
     })
 });

@@ -50,8 +50,10 @@ const config = {
 	plugins: [	
 	    new webpack.HotModuleReplacementPlugin(),
         new webpack.DefinePlugin({
+            "__BROWSER__": JSON.stringify(true),
+            "__SERVER__": JSON.stringify(false),
             "process.env": {
-                // NODE_ENV: JSON.stringify("development"),
+                NODE_ENV: JSON.stringify("development"),
                 BROWSER: JSON.stringify(true)
             }
         })

@@ -1,20 +1,13 @@
 import React from 'react';
-import DevTools from './components/DevTools';
+import { createDevTools } from 'redux-devtools';
+import LogMonitor from 'redux-devtools-log-monitor';
+import DockMonitor from 'redux-devtools-dock-monitor';
 
-export class DevtoolsContainer extends React.Component {
-    render() {
-        let devTools;
-        if (__BROWSER__) {
-            devTools = null;
-        } else {
-            devTools = <DevTools />
-        } 
+const DevTools = createDevTools(
+  <DockMonitor toggleVisibilityKey='ctrl-h'
+               changePositionKey='ctrl-q'>
+    <LogMonitor theme='tomorrow' />
+  </DockMonitor>
+);
 
-        return (
-            {devTools}
-        );
-    }
-    componentDidMount() {
-        
-    }
-}
+export default DevTools;
